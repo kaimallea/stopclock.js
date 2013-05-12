@@ -29,10 +29,13 @@ function StopClock(options) {
   }
 
   this.timerId = null;
-  this.secondsElapsed = this.parsePrettyTime(this.options.startTime).deltaSeconds;
+  this.secondsElapsed = 0;
   this.hh = '00';
   this.mm = '00';
   this.ss = '00';
+
+  // Set initial start time
+  this.set(this.options.startTime);
 }
 
 
@@ -73,6 +76,39 @@ StopClock.prototype.start = function() {
 
 
 /**
+ * Set time
+ *
+ * @method set
+ * @param {String} Pretty time, e.g. "30m", "1hr30m", "1hr30m15s"
+ * @return {Object} Returns StopClock instance
+ */
+StopClock.prototype.set = function(time) {
+  this.secondsElapsed = this.parsePrettyTime(time).deltaSeconds;
+  this.updateHands();
+  return this;
+}
+
+
+/**
+ * Update clock hands
+ *
+ * @method updateHands
+ * @return {Object} Returns StopClock instance
+ */
+StopClock.prototype.updateHands = function() {
+  this.hh = this.pad( parseInt(this.secondsElapsed / 3600, 10) );
+  this.mm = this.pad( parseInt(this.secondsElapsed / 60, 10) );
+  this.ss = this.pad( this.secondsElapsed % 60 );
+
+  var mmToInt = parseInt(this.mm, 10);
+  if (mmToInt >= 60) {
+    this.mm = this.pad( this.mm - (parseInt(mmToInt/60, 10) * 60) );
+  }
+
+  return this;
+}
+
+/**
  * Pad a single digit by prepending it with a single zero
  *
  * @method pad
@@ -97,14 +133,7 @@ StopClock.prototype.tick = function() {
     --this.secondsElapsed;
   }
 
-  this.hh = this.pad( parseInt(this.secondsElapsed / 3600, 10) );
-  this.mm = this.pad( parseInt(this.secondsElapsed / 60, 10) );
-  this.ss = this.pad( this.secondsElapsed % 60 );
-
-  var mmToInt = parseInt(this.mm, 10);
-  if (mmToInt >= 60) {
-    this.mm = this.pad( this.mm - (parseInt(mmToInt/60, 10) * 60) );
-  }
+  this.updateHands();
 
   if (typeof this.options.onTick === 'function') {
     this.options.onTick.call(this);
