@@ -163,20 +163,18 @@ StopClock.prototype.toString = function() {
 
 
 /**
- * Parses this.startTime, which is expected to be in a
- * "pretty time" format (e.g., 1h 30m)
+ * Parses a string in a "pretty time" format (e.g., 1h 30m)
  *
  * @method parsePrettyTime
  * @return {Object} Returns object with properties representing the parsed time
  */
-StopClock.prototype.parsePrettyTime = function() {
-  var startTime = this.options.startTime;
-  if (!startTime || typeof startTime !== 'string') {
-    startTime = '0h0m';
+StopClock.prototype.parsePrettyTime = function(time) {
+  if (!time || typeof time !== 'string') {
+    time = '0h0m';
   }
 
   var format = /(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?/i,
-      match = startTime.replace(/\s/g, '').match(format),
+      match = time.replace(/\s/g, '').match(format),
       hours = parseInt( (match[1] || 0), 10 ),
       minutes = parseInt( (match[2] || 0), 10 ),
       seconds = parseInt( (match[3] || 0), 10 ),
