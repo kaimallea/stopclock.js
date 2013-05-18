@@ -74,12 +74,16 @@ StopClock.prototype.start = function() {
 
   var self = this;
   if ( this.options.angularTimer && typeof $timeout !== 'undefined' ) {
-    this.timerId = $timeout(function() {
-      self.tick();
+
+    var angularInterval = function angularInterval() {
       this.timerId = $timeout(function() {
         self.tick();
+        angularInterval();
       }, 1000);
-    }, 1000);
+    };
+
+    angularInterval();
+
   } else {
     this.timerId = setInterval(function() {
       self.tick();
