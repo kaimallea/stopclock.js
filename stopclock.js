@@ -47,7 +47,13 @@ function StopClock(options) {
  */
 StopClock.prototype.stop = function() {
   if ( this.timerId ) {
-    clearInterval( this.timerId );
+
+    if ( this.options.angularTimer && typeof $timeout !== 'undefined') {
+      $timeout.cancel( this.timerId );
+    } else {
+      clearInterval( this.timerId );
+    }
+
     this.timerId = null;
   }
 
@@ -67,9 +73,15 @@ StopClock.prototype.start = function() {
   this.stop();
 
   var self = this;
-  this.timerId = setInterval(function() {
-    self.tick();
-  }, 1000);
+  if ( this.options.angularTimer && typeof $timeout !== 'undefined' ) {
+    this.timerId = $timeout(function() {
+      self.tick();
+    }, 1000);
+  } else {
+    this.timerId = setInterval(function() {
+      self.tick();
+    }, 1000);
+  }
 
   return this;
 };
