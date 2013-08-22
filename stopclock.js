@@ -213,7 +213,8 @@
         totalClocks: 0,
         timerId: null,
         runTimer: function() {
-            this.timerId = setInterval(this.tickClocks, 1000);
+            var that = this;
+            this.timerId = setInterval(function() { that.runTimer(); }, 1000);
         },
         tickClocks: function() {
             var clock, i;
