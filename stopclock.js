@@ -217,7 +217,9 @@
             this.timerId = setInterval(function() { that.tickClocks.call(that); }, 1000);
         },
         tickClocks: function() {
-            var clock, i;
+            var clock = null,
+                i = 0;
+
             for (; i < this.totalClocks; i++) {
                 clock = clockList[i];
                 if (clock.isRunning()) {
