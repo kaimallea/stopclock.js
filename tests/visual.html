@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>StopClock Visual Test</title>
+    <style type="text/css">
+        .clock {}
+    </style>
+</head>
+<body>
+    <div id="up" class="clock"></div>
+    <div id="down" class="clock"></div>
+    <script src="../stopclock.js"></script>
+    <script>
+        var up = document.getElementById('up'),
+            down = document.getElementById('down');
+
+        var clock1 = StopClock.init({
+            startTime: '5m',
+            onTick: function() {
+                up.innerHTML = this.toString();
+            }
+        });
+
+        var clock2 = StopClock.init({
+            startTime: '5m',
+            countDown: true,
+            onTick: function() {
+                down.innerHTML = this.toString();
+            }
+        });
+
+        clock1.start();
+        clock2.start();
+
+    </script>
+</body>
+</html>
