@@ -214,7 +214,7 @@
         timerId: null,
         runTimer: function() {
             var that = this;
-            this.timerId = setInterval(function() { that.runTimer(); }, 1000);
+            this.timerId = setInterval(function() { that.tickClocks.call(that); }, 1000);
         },
         tickClocks: function() {
             var clock, i;
