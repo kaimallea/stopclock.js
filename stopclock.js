@@ -30,6 +30,7 @@
             this.options.startTime = options;
         }
 
+        this._isRunning = false;
         this.timerId = null;
         this.secondsElapsed = 0;
         this.hh = '00';
@@ -48,11 +49,13 @@
     * @return {Object} Returns StopClock instance
     */
     StopClock.prototype.stop = function() {
+        this._isRunning = false;
+        /*
         if ( this.timerId ) {
             clearInterval( this.timerId );
             this.timerId = null;
         }
-
+        */
         return this;
     };
 
@@ -64,15 +67,16 @@
     * @return {Object} Returns StopClock instance
     */
     StopClock.prototype.start = function() {
-
+        this._isRunning = true;
         // Cancel existing timer
+        /*
         this.stop();
 
         var self = this;
         this.timerId = setInterval(function() {
             self.tick();
         }, 1000);
-
+        */
         return this;
     };
 
@@ -200,18 +204,49 @@
     * @return {Boolean} Returns true or false
     */
     StopClock.prototype.isRunning = function() {
-        return !!this.timerId;
+        return this._isRunning;
     };
 
 
+    var StopClockFactory = {
+        clockList: [],
+        totalClocks: 0,
+        timerId: null,
+        runTimer: function() {
+            this.timerId = setInterval(this.tickClocks, 1000);
+        },
+        tickClocks: function() {
+            var clock, i;
+            for (; i < this.totalClocks; i++) {
+                clock = clockList[i];
+                if (clock.isRunning()) {
+                    clock.tick();
+                }
+            }
+        },
+        init: function(options) {
+            var clock = new StopClock(options),
+                id = this.clockList.push(clock) - 1;
+
+            clock.id = id;
+
+            if (!this.totalClocks) {
+                this.runTimer();
+            }
+
+            this.totalClocks += 1;
+            return clock;
+        }
+    };
+
     if (typeof module !== 'undefined' && module.exports) {
-        module.exports = StopClock;
+        module.exports = StopClockFactory;
     } else if (typeof define === 'function' && define.amd) {
         define(function() {
-            return StopClock;
+            return StopClockFactory;
         });
     } else {
-        global.StopClock = StopClock;
+        global.StopClock = StopClockFactory;
     }
 
 }(this));
