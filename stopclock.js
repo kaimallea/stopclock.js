@@ -221,7 +221,7 @@
                 i = 0;
 
             for (; i < this.totalClocks; i++) {
-                clock = clockList[i];
+                clock = this.clockList[i];
                 if (clock.isRunning()) {
                     clock.tick();
                 }
