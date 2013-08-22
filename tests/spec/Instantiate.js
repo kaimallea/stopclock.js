@@ -1,5 +1,5 @@
 describe('StopClock Instantiation', function() {
-    var stopclock = new StopClock();
+    var stopclock = StopClock.init();
 
     it('should stringify to 00:00:00', function() {
         var result = stopclock.toString();

@@ -1,5 +1,5 @@
 describe('set()', function() {
-    var stopclock = new StopClock();
+    var stopclock = StopClock.init();
 
     it('should be 00:30:00', function() {
         expect( stopclock.set('30m').toString() ).toBe('00:30:00');

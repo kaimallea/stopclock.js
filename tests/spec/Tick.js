@@ -11,7 +11,7 @@ describe('tick()', function() {
     describe('normal tick', function() {
 
         beforeEach(function() {
-            stopclock = new StopClock();
+            stopclock = StopClock.init();
         });
 
         afterEach(function() {
@@ -38,7 +38,7 @@ describe('tick()', function() {
     describe('reverse tick (countdown)', function() {
 
         beforeEach(function() {
-            stopclock = new StopClock({ countDown: true });
+            stopclock = StopClock.init({ countDown: true });
             stopclock.set('3h');
         });
 

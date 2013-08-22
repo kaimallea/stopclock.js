@@ -1,5 +1,5 @@
 describe('parsePrettyTime() with no args', function() {
-    var stopclock = new StopClock();
+    var stopclock = StopClock.init();
 
     it('hours should be 0', function() {
         var result = stopclock.parsePrettyTime().hours;
@@ -28,7 +28,7 @@ describe('parsePrettyTime() with no args', function() {
 });
 
 describe('parsePrettyTime() with seconds only (30s)', function() {
-    var stopclock = new StopClock(),
+    var stopclock = StopClock.init(),
         time = '30s';
 
     it('hours should be 0', function() {
@@ -60,7 +60,7 @@ describe('parsePrettyTime() with seconds only (30s)', function() {
 });
 
 describe('parsePrettyTime() with minutes only (30m)', function() {
-    var stopclock = new StopClock(),
+    var stopclock = StopClock.init(),
         time = '30m';
 
     it('hours should be 0', function() {
@@ -92,7 +92,7 @@ describe('parsePrettyTime() with minutes only (30m)', function() {
 
 
 describe('parsePrettyTime() with hours only (3h)', function() {
-    var stopclock = new StopClock(),
+    var stopclock = StopClock.init(),
         time = '3h';
 
     it('hours should be 3', function() {
@@ -123,7 +123,7 @@ describe('parsePrettyTime() with hours only (3h)', function() {
 });
 
 describe('parsePrettyTime() with minutes and seconds (30m30s)', function() {
-    var stopclock = new StopClock(),
+    var stopclock = StopClock.init(),
         time = '30m30s';
 
     it('hours should be 0', function() {
@@ -154,7 +154,7 @@ describe('parsePrettyTime() with minutes and seconds (30m30s)', function() {
 });
 
 describe('parsePrettyTime() with hours, minutes and seconds (3h30m30s)', function() {
-    var stopclock = new StopClock(),
+    var stopclock = StopClock.init(),
         time = '3h30m30s';
 
     it('hours should be 3', function() {

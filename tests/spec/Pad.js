@@ -1,5 +1,5 @@
 describe('pad()', function() {
-    var stopclock = new StopClock();
+    var stopclock = StopClock.init();
 
 
     describe('pad() using numbers', function() {
